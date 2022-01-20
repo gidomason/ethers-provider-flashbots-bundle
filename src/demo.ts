@@ -92,8 +92,14 @@ async function main() {
       throw new Error(bundleSubmission.error.message)
     }
     const waitResponse = await bundleSubmission.wait()
+/*
+      console.log({
+        bundleStats: await flashbotsProvider.getBundleStats(simulation.bundleHash, targetBlock),
+        userStats: await flashbotsProvider.getUserStats()
+      })
+*/
     console.log(`Wait Response: ${FlashbotsBundleResolution[waitResponse]}`)
-    if (waitResponse === FlashbotsBundleResolution.BundleIncluded || waitResponse === FlashbotsBundleResolution.AccountNonceTooHigh) {
+    if (waitResponse === FlashbotsBundleResolution.BundleIncluded || waitResponse === FlashbotsBundleResolution.AccountNonceTooHigh || waitResponse === FlashbotsBundleResolution.BlockPassedWithoutInclusion) {
       process.exit(0)
     } else {
       console.log({
