@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config(); // load env vars from .env
+
 import { BigNumber, providers, Wallet } from 'ethers'
 import { FlashbotsBundleProvider, FlashbotsBundleResolution } from './index'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
@@ -20,14 +23,19 @@ const BLOCKS_IN_THE_FUTURE = 2
 
 // ===== Uncomment this for Goerli =======
 const CHAIN_ID = 5
+//console.log(process.env.INFURA_API_KEY)
 const provider = new providers.InfuraProvider(CHAIN_ID, process.env.INFURA_API_KEY)
+//console.log(provider)
 const FLASHBOTS_EP = 'https://relay-goerli.flashbots.net/'
 // ===== Uncomment this for Goerli =======
 
 async function main() {
   const authSigner = FLASHBOTS_AUTH_KEY ? new Wallet(FLASHBOTS_AUTH_KEY) : Wallet.createRandom()
+//    console.log(authSigner);
   const wallet = new Wallet(process.env.PRIVATE_KEY || '', provider)
+//    console.log(wallet);
   const flashbotsProvider = await FlashbotsBundleProvider.create(provider, authSigner, FLASHBOTS_EP)
+//    console.log(flashbotsProvider);
 
   const legacyTransaction = {
     to: wallet.address,
