@@ -31,7 +31,8 @@ const FLASHBOTS_EP = 'https://relay-goerli.flashbots.net/'
 
 async function main() {
   const authSigner = FLASHBOTS_AUTH_KEY ? new Wallet(FLASHBOTS_AUTH_KEY) : Wallet.createRandom()
-//    console.log(authSigner);
+//    console.log(authSigner , authSigner.privateKey);
+    console.log(authSigner);
   const wallet = new Wallet(process.env.PRIVATE_KEY || '', provider)
 //    console.log(wallet);
   const flashbotsProvider = await FlashbotsBundleProvider.create(provider, authSigner, FLASHBOTS_EP)
@@ -75,7 +76,7 @@ async function main() {
       {
         signer: wallet,
         transaction: eip1559Transaction
-      }
+      },
     ])
     const targetBlock = blockNumber + BLOCKS_IN_THE_FUTURE
     const simulation = await flashbotsProvider.simulate(signedTransactions, targetBlock)
